@@ -1,0 +1,297 @@
+# Practical 4 – Apache Spark Installation & DataFrame Operations (Absolute Beginner Guide)
+
+## Step 1: Open Ubuntu (WSL)
+- Click **Start Menu**.
+- Search for **Ubuntu**.
+- Open **Ubuntu**.
+- A black terminal window will appear.
+
+> **Note:** Every command below is typed in this same Ubuntu terminal.
+
+↓
+
+## Step 2: Install Java 17 (Required for Spark)
+
+In the Ubuntu terminal, type:
+
+```bash
+sudo apt install openjdk-17-jdk -y
+```
+
+Press **Enter**.
+
+After installation, verify Java:
+
+```bash
+java -version
+```
+
+↓
+
+## Step 3: Install Python & Virtual Environment
+
+Type:
+
+```bash
+sudo apt install python3.12 python3.12-venv python3-pip -y
+```
+
+Press **Enter**.
+
+↓
+
+## Step 4: Create a Virtual Environment
+
+Type:
+
+```bash
+python3.12 -m venv spark_env
+```
+
+Press **Enter**.
+
+↓
+
+## Step 5: Activate the Virtual Environment
+
+Type:
+
+```bash
+source spark_env/bin/activate
+```
+
+Press **Enter**.
+
+You should now see:
+
+```bash
+(spark_env) pranit@DESKTOP:~$
+```
+
+↓
+
+## Step 6: Install PySpark
+
+Type:
+
+```bash
+pip install pyspark
+```
+
+Press **Enter**.
+
+Wait until the installation completes.
+
+↓
+
+## Step 7: Download Apache Spark
+
+Type:
+
+```bash
+wget https://archive.apache.org/dist/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz
+```
+
+Press **Enter**.
+
+↓
+
+## Step 8: Extract Spark
+
+Type:
+
+```bash
+tar -xvzf spark-3.5.1-bin-hadoop3.tgz
+```
+
+Press **Enter**.
+
+Rename the folder:
+
+```bash
+mv spark-3.5.1-bin-hadoop3 spark
+```
+
+↓
+
+## Step 9: Configure Spark Environment Variables
+
+Open the bash configuration file:
+
+```bash
+nano ~/.bashrc
+```
+
+Add the following lines at the bottom:
+
+```bash
+export SPARK_HOME=~/spark
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+```
+
+Save the file:
+
+- Ctrl + O
+- Enter
+- Ctrl + X
+
+Apply the changes:
+
+```bash
+source ~/.bashrc
+```
+
+↓
+
+## Step 10: Start PySpark
+
+If the virtual environment is not active, activate it again:
+
+```bash
+source spark_env/bin/activate
+```
+
+Start Spark:
+
+```bash
+pyspark
+```
+
+Press **Enter**.
+
+A PySpark shell will open.
+
+> **Note:** All the following Python code is typed inside the **PySpark shell**, **not** in Ubuntu or VS Code.
+
+↓
+
+## Step 11: Create Sample Data
+
+Type:
+
+```python
+data = [
+    ("Alice",25),
+    ("Bob",30),
+    ("Charlie",35),
+    ("David",40)
+]
+
+columns = ["Name","Age"]
+```
+
+↓
+
+## Step 12: Create a DataFrame
+
+Type:
+
+```python
+df = spark.createDataFrame(data, columns)
+```
+
+↓
+
+## Step 13: Display the Data
+
+Type:
+
+```python
+df.show()
+```
+
+↓
+
+## Step 14: Filter Records
+
+Type:
+
+```python
+df.filter(df.Age > 30).show()
+```
+
+↓
+
+## Step 15: Display Only the Name Column
+
+Type:
+
+```python
+df.select("Name").show()
+```
+
+↓
+
+## Step 16: Sort the Data
+
+Type:
+
+```python
+df.sort("Age").show()
+```
+
+↓
+
+## Step 17: Group Data and Count
+
+Type:
+
+```python
+df.groupBy("Age").count().show()
+```
+
+↓
+
+## Step 18: Exit PySpark
+
+Type:
+
+```python
+exit()
+```
+
+or press:
+
+```text
+Ctrl + D
+```
+
+---
+
+# Complete Flow
+
+Open Ubuntu (WSL)
+↓
+Install Java
+↓
+Install Python & venv
+↓
+Create Virtual Environment
+↓
+Activate Virtual Environment
+↓
+Install PySpark
+↓
+Download Spark
+↓
+Extract Spark
+↓
+Configure Environment Variables
+↓
+Start PySpark
+↓
+Create Sample Data
+↓
+Create DataFrame
+↓
+Display Data
+↓
+Filter Data
+↓
+Select Column
+↓
+Sort Data
+↓
+Group & Count
+↓
+Exit PySpark
