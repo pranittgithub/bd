@@ -1,0 +1,272 @@
+# Practical 5 – Apache Spark Error Handling & Data Recovery (Absolute Beginner Guide)
+
+## Step 1: Open Ubuntu (WSL)
+- Click **Start Menu**.
+- Search for **Ubuntu**.
+- Open **Ubuntu**.
+- A black terminal window will appear.
+
+> **Note:** Every command below is typed in this same Ubuntu terminal.
+
+↓
+
+## Step 2: Activate the Virtual Environment
+
+Type:
+
+```bash
+source spark_env/bin/activate
+```
+
+Press **Enter**.
+
+You should see:
+
+```bash
+(spark_env) pranit@DESKTOP:~$
+```
+
+↓
+
+## Step 3: Start PySpark
+
+Type:
+
+```bash
+pyspark
+```
+
+Press **Enter**.
+
+> **Note:** All the following Python code is typed inside the **PySpark Shell**, not in Ubuntu or VS Code.
+
+↓
+
+## Step 4: Create Sample Data
+
+Type:
+
+```python
+data = [
+    ("Alice", 25),
+    ("Bob", "thirty"),
+    ("Charlie", 35),
+    ("David", None)
+]
+
+columns = ["Name", "Age"]
+```
+
+↓
+
+## Step 5: Create a DataFrame
+
+Type:
+
+```python
+df = spark.createDataFrame(data, columns)
+```
+
+↓
+
+## Step 6: Display the Data
+
+Type:
+
+```python
+df.show()
+```
+
+↓
+
+## Step 7: Import Required Library
+
+Type:
+
+```python
+from pyspark.sql.functions import col
+```
+
+↓
+
+## Step 8: Clean Invalid Data
+
+Type:
+
+```python
+df_clean = df.filter(col("Age").cast("int").isNotNull())
+```
+
+↓
+
+## Step 9: Display Cleaned Data
+
+Type:
+
+```python
+df_clean.show()
+```
+
+↓
+
+## Step 10: Create Safe Conversion Function
+
+Type:
+
+```python
+def safe_convert(x):
+    try:
+        return int(x)
+    except:
+        return None
+```
+
+↓
+
+## Step 11: Convert DataFrame into RDD
+
+Type:
+
+```python
+rdd = df.rdd
+```
+
+↓
+
+## Step 12: Apply Error Handling
+
+Type:
+
+```python
+processed_rdd = rdd.map(lambda row: (row["Name"], safe_convert(row["Age"])))
+```
+
+↓
+
+## Step 13: Convert RDD Back to DataFrame
+
+Type:
+
+```python
+df_processed = processed_rdd.toDF(["Name", "Age"])
+```
+
+↓
+
+## Step 14: Display Processed Data
+
+Type:
+
+```python
+df_processed.show()
+```
+
+↓
+
+## Step 15: Replace Missing Values
+
+Type:
+
+```python
+df_final = df_processed.fillna({"Age": 0})
+```
+
+↓
+
+## Step 16: Display Final Data
+
+Type:
+
+```python
+df_final.show()
+```
+
+↓
+
+## Step 17: Save the Data
+
+Type:
+
+```python
+df_final.write.mode("overwrite").csv("output_data")
+```
+
+↓
+
+## Step 18: Read the Saved Data Again
+
+Type:
+
+```python
+df_recovered = spark.read.csv("output_data", header=False)
+```
+
+↓
+
+## Step 19: Display Recovered Data
+
+Type:
+
+```python
+df_recovered.show()
+```
+
+↓
+
+## Step 20: Exit PySpark
+
+Type:
+
+```python
+exit()
+```
+
+or press:
+
+```text
+Ctrl + D
+```
+
+---
+
+# Complete Flow
+
+Open Ubuntu (WSL)
+↓
+Activate Virtual Environment
+↓
+Start PySpark
+↓
+Create Sample Data
+↓
+Create DataFrame
+↓
+Display Data
+↓
+Import Library
+↓
+Clean Invalid Data
+↓
+Display Cleaned Data
+↓
+Create Safe Convert Function
+↓
+Convert DataFrame to RDD
+↓
+Apply Error Handling
+↓
+Convert Back to DataFrame
+↓
+Display Processed Data
+↓
+Replace Null Values
+↓
+Display Final Data
+↓
+Save Data
+↓
+Read Saved Data
+↓
+Display Recovered Data
+↓
+Exit PySpark
