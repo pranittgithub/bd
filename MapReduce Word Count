@@ -1,0 +1,238 @@
+# Practical 2 – MapReduce Word Count (Absolute Beginner Guide)
+
+## Step 1: Open Ubuntu (WSL)
+- Click **Start Menu**.
+- Search for **Ubuntu**.
+- Open **Ubuntu**.
+- A black terminal window will appear.
+
+> **Note:** Every command in this practical is typed in this same Ubuntu terminal.
+
+↓
+
+## Step 2: Start Hadoop
+In the Ubuntu terminal, type:
+
+```bash
+hadoop namenode -format
+```
+
+- Press **Enter**.
+- Wait until the formatting process completes.
+
+↓
+
+## Step 3: Start HDFS
+In the same Ubuntu terminal, type:
+
+```bash
+start-dfs.sh
+```
+
+- Press **Enter**.
+- Wait for HDFS to start.
+
+↓
+
+## Step 4: Start YARN
+In the same Ubuntu terminal, type:
+
+```bash
+start-yarn.sh
+```
+
+- Press **Enter**.
+- Wait for YARN to start.
+
+↓
+
+## Step 5: Verify Hadoop Services
+In the same Ubuntu terminal, type:
+
+```bash
+jps
+```
+
+- Press **Enter**.
+- Verify that services such as **NameNode**, **DataNode**, **ResourceManager**, and **NodeManager** are running.
+
+↓
+
+## Step 6: Create the Input File
+In the same Ubuntu terminal, type:
+
+```bash
+nano input.txt
+```
+
+- Press **Enter**.
+- Nano text editor will open (similar to Notepad).
+
+Type the following:
+
+```text
+Hello Hadoop
+Hello Big Data
+Hadoop is powerful
+```
+
+Save the file:
+
+- Press **Ctrl + O**
+- Press **Enter**
+- Press **Ctrl + X**
+
+You will return to the Ubuntu terminal.
+
+↓
+
+## Step 7: Create Input Directory in HDFS
+In the same Ubuntu terminal, type:
+
+```bash
+hdfs dfs -mkdir /input
+```
+
+- Press **Enter**.
+
+↓
+
+## Step 8: Upload the Input File to HDFS
+In the same Ubuntu terminal, type:
+
+```bash
+hdfs dfs -put input.txt /input
+```
+
+- Press **Enter**.
+
+↓
+
+## Step 9: Create the Mapper Program
+In the same Ubuntu terminal, type:
+
+```bash
+nano mapper.py
+```
+
+- Press **Enter**.
+- Nano editor will open.
+- Paste the **Mapper Python code** from the practical PDF.
+- Save the file:
+  - **Ctrl + O**
+  - **Enter**
+  - **Ctrl + X**
+
+↓
+
+## Step 10: Create the Reducer Program
+In the same Ubuntu terminal, type:
+
+```bash
+nano reducer.py
+```
+
+- Press **Enter**.
+- Nano editor will open.
+- Paste the **Reducer Python code** from the practical PDF.
+- Save the file:
+  - **Ctrl + O**
+  - **Enter**
+  - **Ctrl + X**
+
+↓
+
+## Step 11: Give Execute Permission
+In the same Ubuntu terminal, type:
+
+```bash
+chmod +x mapper.py reducer.py
+```
+
+- Press **Enter**.
+
+↓
+
+## Step 12: Delete Previous Output Folder (If It Exists)
+In the same Ubuntu terminal, type:
+
+```bash
+hdfs dfs -rm -r /output
+```
+
+- Press **Enter**.
+- Ignore the message if the folder does not exist.
+
+↓
+
+## Step 13: Execute the Hadoop Streaming Job
+In the same Ubuntu terminal, run the following command:
+
+```bash
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar \
+-files mapper.py,reducer.py \
+-input /input/input.txt \
+-output /output \
+-mapper "python3 mapper.py" \
+-reducer "python3 reducer.py"
+```
+
+- Press **Enter**.
+- Wait until the job completes successfully.
+
+↓
+
+## Step 14: Verify Output Folder
+In the same Ubuntu terminal, type:
+
+```bash
+hdfs dfs -ls /output
+```
+
+- Press **Enter**.
+
+↓
+
+## Step 15: Display the Final Output
+In the same Ubuntu terminal, type:
+
+```bash
+hdfs dfs -cat /output/part-00000
+```
+
+- Press **Enter**.
+- The word count result will be displayed.
+
+---
+
+## Complete Flow
+
+Open Ubuntu (WSL)
+↓
+Start Hadoop (Format NameNode)
+↓
+Start HDFS
+↓
+Start YARN
+↓
+Verify Services
+↓
+Create Input File
+↓
+Create HDFS Input Folder
+↓
+Upload File to HDFS
+↓
+Create Mapper Program
+↓
+Create Reducer Program
+↓
+Give Execute Permission
+↓
+Delete Previous Output
+↓
+Run Hadoop Streaming Job
+↓
+Check Output Folder
+↓
+Display Final Output
