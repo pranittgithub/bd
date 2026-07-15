@@ -1,0 +1,286 @@
+# Practical 7 – HBase Installation & Working (Absolute Beginner Guide)
+
+## Step 1: Open Ubuntu (WSL)
+
+- Click **Start Menu**.
+- Search **Ubuntu**.
+- Open **Ubuntu**.
+- A black terminal window will appear.
+
+> Every command below is typed in this Ubuntu terminal unless mentioned otherwise.
+
+↓
+
+## Step 2: Download HBase
+
+In the Ubuntu terminal, type:
+
+```bash
+wget https://archive.apache.org/dist/hbase/2.4.17/hbase-2.4.17-bin.tar.gz
+```
+
+Press **Enter**.
+
+Wait until downloading finishes.
+
+↓
+
+## Step 3: Extract HBase
+
+In the same Ubuntu terminal, type:
+
+```bash
+tar -xvzf hbase-2.4.17-bin.tar.gz
+```
+
+Press **Enter**.
+
+After extraction, rename the folder.
+
+Type:
+
+```bash
+mv hbase-2.4.17 hbase
+```
+
+Press **Enter**.
+
+↓
+
+## Step 4: Open Bash Configuration File
+
+In the same Ubuntu terminal, type:
+
+```bash
+nano ~/.bashrc
+```
+
+Press **Enter**.
+
+The **Nano Editor** opens.
+
+Go to the bottom of the file.
+
+Add:
+
+```bash
+export HBASE_HOME=~/hbase
+export PATH=$PATH:$HBASE_HOME/bin
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$PATH:$JAVA_HOME/bin
+```
+
+Save:
+
+- Ctrl + O
+- Enter
+- Ctrl + X
+
+Back in the Ubuntu terminal, type:
+
+```bash
+source ~/.bashrc
+```
+
+Press **Enter**.
+
+↓
+
+## Step 5: Configure HBase
+
+Still in the Ubuntu terminal, type:
+
+```bash
+nano ~/hbase/conf/hbase-site.xml
+```
+
+Press **Enter**.
+
+Nano Editor opens.
+
+Delete the existing content between `<configuration>` tags (if needed) and paste the following:
+
+```xml
+<configuration>
+    <property>
+        <name>hbase.rootdir</name>
+        <value>file:///home/dev0/hbase_data</value>
+    </property>
+</configuration>
+```
+
+Save:
+
+- Ctrl + O
+- Enter
+- Ctrl + X
+
+↓
+
+## Step 6: Start HBase
+
+Back in the Ubuntu terminal, type:
+
+```bash
+start-hbase.sh
+```
+
+Press **Enter**.
+
+Wait until HBase starts.
+
+↓
+
+## Step 7: Open HBase Shell
+
+Still in the Ubuntu terminal, type:
+
+```bash
+hbase shell
+```
+
+Press **Enter**.
+
+Now the screen changes.
+
+You are **no longer in the Ubuntu terminal**.
+
+You are inside the **HBase Shell**.
+
+Every command below is typed inside the **HBase Shell**.
+
+↓
+
+## Step 8: Create a Table
+
+Type:
+
+```bash
+create 'student', 'info'
+```
+
+Press **Enter**.
+
+A table named **student** is created.
+
+↓
+
+## Step 9: Insert First Student
+
+Type:
+
+```bash
+put 'student', '1', 'info:name', 'Alice'
+```
+
+Press **Enter**.
+
+↓
+
+Type:
+
+```bash
+put 'student', '1', 'info:age', '22'
+```
+
+Press **Enter**.
+
+↓
+
+## Step 10: Insert Second Student
+
+Type:
+
+```bash
+put 'student', '2', 'info:name', 'Bob'
+```
+
+Press **Enter**.
+
+↓
+
+Type:
+
+```bash
+put 'student', '2', 'info:age', '24'
+```
+
+Press **Enter**.
+
+↓
+
+## Step 11: Display All Records
+
+Still inside the **HBase Shell**, type:
+
+```bash
+scan 'student'
+```
+
+Press **Enter**.
+
+All student records will be displayed.
+
+↓
+
+## Step 12: Display Only Student 1
+
+Still inside the **HBase Shell**, type:
+
+```bash
+get 'student', '1'
+```
+
+Press **Enter**.
+
+Only Student 1's record will be displayed.
+
+↓
+
+## Step 13: Exit HBase Shell
+
+Still inside the **HBase Shell**, type:
+
+```bash
+exit
+```
+
+Press **Enter**.
+
+You will return to the normal Ubuntu terminal.
+
+---
+
+# Complete Flow
+
+Open Ubuntu
+↓
+Download HBase
+↓
+Extract HBase
+↓
+Open `.bashrc`
+↓
+Add Environment Variables
+↓
+Apply Changes (`source ~/.bashrc`)
+↓
+Open `hbase-site.xml`
+↓
+Paste Configuration
+↓
+Save File
+↓
+Start HBase
+↓
+Open HBase Shell
+↓
+Create Table
+↓
+Insert Data
+↓
+Scan Table
+↓
+Get Specific Row
+↓
+Exit HBase Shell
