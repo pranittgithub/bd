@@ -1,0 +1,36 @@
+import nltk
+from nltk.util import trigrams
+from nltk.tokenize import word_tokenize
+from nltk.probability import FreqDist
+
+nltk.download('punkt_tab')
+
+text = "Natural language processing is a very interesting field of Computer science and natural language processing is widely used"
+
+tokens = word_tokenize(text)
+print(tokens)
+
+tri_grams = list(trigrams(tokens))
+
+for tri in tri_grams:
+  print(tri)
+
+freq_dist = FreqDist(tri_grams)
+
+for tri_gram, count in freq_dist.items():
+  print(tri_gram, ":", count)
+
+
+def predict_next(w1, w2):
+  candidates = {}
+
+  for(a, b, c), count in freq_dist.items():
+    if a == w1 and b == w2:
+      candidates[c] = count
+
+    if candidates :
+      return max( candidates, key = candidates.get) 
+    else:
+      return "No Prediction found"
+
+print(predict_next("Natural", "language"))
