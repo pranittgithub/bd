@@ -1,0 +1,156 @@
+# Practical 8 – Apache Pig Word Count (Absolute Beginner Guide)
+
+## Step 1: Open Ubuntu (WSL)
+- Click **Start Menu**.
+- Search for **Ubuntu**.
+- Open **Ubuntu**.
+- A black terminal window will appear.
+
+> **Note:** Every command below is typed in the Ubuntu terminal.
+
+↓
+
+## Step 2: Download Apache Pig
+
+Type:
+
+```bash
+wget https://dlcdn.apache.org/pig/pig-0.17.0/pig-0.17.0.tar.gz
+```
+
+Press **Enter**.
+
+↓
+
+## Step 3: Extract Apache Pig
+
+Type:
+
+```bash
+tar -xvzf pig-0.17.0.tar.gz
+```
+
+Press **Enter**.
+
+Rename the extracted folder:
+
+```bash
+mv pig-0.17.0 pig
+```
+
+↓
+
+## Step 4: Configure Environment Variables
+
+Open the bash configuration file:
+
+```bash
+nano ~/.bashrc
+```
+
+Add the following lines at the end of the file:
+
+```bash
+export PIG_HOME=~/pig
+export PATH=$PATH:$PIG_HOME/bin
+```
+
+Save the file:
+
+- Ctrl + O
+- Enter
+- Ctrl + X
+
+Apply the changes:
+
+```bash
+source ~/.bashrc
+```
+
+↓
+
+## Step 5: Create the Input File
+
+In the Ubuntu terminal, type:
+
+```bash
+nano input.txt
+```
+
+Press **Enter**.
+
+Type the following:
+
+```text
+big data is big
+data is powerful
+big data is useful
+```
+
+Save the file:
+
+- Ctrl + O
+- Enter
+- Ctrl + X
+
+↓
+
+## Step 6: Create the Pig Script
+
+In the Ubuntu terminal, type:
+
+```bash
+nano wordcount.pig
+```
+
+Press **Enter**.
+
+Paste the Pig script from the practical PDF.
+
+Save the file:
+
+- Ctrl + O
+- Enter
+- Ctrl + X
+
+↓
+
+## Step 7: Run the Pig Script
+
+In the Ubuntu terminal, type:
+
+```bash
+pig wordcount.pig
+```
+
+Press **Enter**.
+
+↓
+
+## Step 8: View the Output
+
+The word count result will be displayed directly in the Ubuntu terminal.
+
+---
+
+# Complete Flow
+
+Open Ubuntu (WSL)
+↓
+Download Apache Pig
+↓
+Extract Apache Pig
+↓
+Configure Environment Variables
+↓
+Create Input File
+↓
+Create `wordcount.pig`
+↓
+Paste Pig Script
+↓
+Save File
+↓
+Run Pig Script
+↓
+View Word Count Output
